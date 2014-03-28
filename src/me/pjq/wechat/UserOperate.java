@@ -42,7 +42,7 @@ public class UserOperate extends AbstractUserOperate {
     @Override
     public AbstractResponse onTextMessage(TextRequest text) throws WeixinException {
         // 回复文本消息，除此以外，还可以以回复语音、图片、新闻等等
-        String help = controller.findHelp("接收到文本消息");
+        String help = controller.findHelp("已经接收到你的消息, 不要再调戏我了, 我正在苦逼的开发新功能中...更多消息请联系我的主人JianqingPeng.");
         help = help.replaceFirst("%str%", text.Content);
         help = help.replaceFirst("%length%", String.valueOf(text.Content.length()));
         return buildTextResponse(help);
