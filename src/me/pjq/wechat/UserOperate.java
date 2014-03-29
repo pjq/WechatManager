@@ -45,9 +45,7 @@ public class UserOperate extends AbstractUserOperate {
     @Override
     public AbstractResponse onTextMessage(TextRequest text) throws WeixinException {
         // 回复文本消息，除此以外，还可以以回复语音、图片、新闻等等
-    	String help = CommandsHelper.getInstance(controller).commandParser(text);
-        
-        return buildTextResponse(help);
+    	return CommandsHelper.getInstance(controller).commandParser(text);
     }
     
 
