@@ -1,6 +1,7 @@
 package me.pjq.wechat;
 
 import cjc.weixinmp.AbstractUserOperate;
+import cjc.weixinmp.AbstractWeixinmpController;
 import cjc.weixinmp.WeixinException;
 import cjc.weixinmp.bean.AbstractResponse;
 import cjc.weixinmp.bean.ClickEventRequest;
@@ -19,12 +20,13 @@ import cjc.weixinmp.bean.VoiceRequest;
  * @author jianqing.cai@qq.com, https://github.com/caijianqing/weixinmp4java/, 2014-2-28 上午11:38:45
  */
 public class UserOperate extends AbstractUserOperate {
+	private CommandsHelper commandsHelper;
 
     public UserOperate(String FromUserOpenID) {
         // 为每一个用户绑定一个对象，可以非常方便地维持每个用户的会话状态
         super(FromUserOpenID);
     }
-
+    
     @Override
     public AbstractResponse onSubscribeEvent(SubscribeEventRequest event) throws WeixinException {
         // 关注事件
@@ -35,18 +37,19 @@ public class UserOperate extends AbstractUserOperate {
     @Override
     public AbstractResponse onUnsubscribeEvent(SubscribeEventRequest event) throws WeixinException {
         // 取消关注事件
+    	 String help = controller.findHelp("unfollow");
         System.out.println(event.FromUserName + "已取消关注");
-        return buildTextResponse("");
+        return buildTextResponse(help);
     }
 
     @Override
     public AbstractResponse onTextMessage(TextRequest text) throws WeixinException {
         // 回复文本消息，除此以外，还可以以回复语音、图片、新闻等等
-        String help = controller.findHelp("已经接收到你的消息, 不要再调戏我了, 我正在苦逼的开发新功能中...更多消息请联系我的主人JianqingPeng.");
-        help = help.replaceFirst("%str%", text.Content);
-        help = help.replaceFirst("%length%", String.valueOf(text.Content.length()));
+    	String help = CommandsHelper.getInstance(controller).commandParser(text);
+        
         return buildTextResponse(help);
     }
+    
 
     @Override
     public AbstractResponse onImageMessage(ImageRequest image) throws WeixinException {
