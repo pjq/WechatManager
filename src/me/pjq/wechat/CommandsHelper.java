@@ -27,7 +27,7 @@ public class CommandsHelper {
 	public String commandParser(TextRequest text) {
 		String command = text.Content;
 		String help = controller
-				.findHelp("已经接收到你的消息, 不要再调戏我了, 我正在苦逼的开发新功能中...更多消息请联系我的主人JianqingPeng.");
+				.findHelp("已经接收到你的消息, 不要再调戏我了, 我正在苦逼的开发新功能中...更多消息请联系我的主人JianqingPeng.\n请输入?获取更多的信息");
 
 		if (command.equalsIgnoreCase(Constants.COMMAND_HELP)) {
 			help = controller.findHelp("command_list");

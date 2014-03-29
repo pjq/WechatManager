@@ -23,6 +23,10 @@ public class WordListUpdater {
     }
 
     public void updateFromServer() {
+    	if(true){
+    		return ;
+    	}
+    	
             new Thread(new Runnable() {
                 @Override
                 public void run() {

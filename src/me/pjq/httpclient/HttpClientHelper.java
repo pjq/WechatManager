@@ -151,17 +151,17 @@ public class HttpClientHelper {
 		String result = "";
 
 		BufferedReader rd = new BufferedReader(isr);
-		String line;
+		StringBuilder sb = new StringBuilder();
+		String line = null;
 
 		try {
 			while ((line = rd.readLine()) != null) {
-				result += line + '\n';
+				sb.append(line+'\n');
 			}
 
 			isr.close();
 			rd.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
