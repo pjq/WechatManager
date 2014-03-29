@@ -5,7 +5,7 @@
 		<title>欢迎关注</title>
 		<content> 
            <![CDATA[
-欢迎关注, 您已经进入传送门, 输入?获得更多指令
+欢迎关注, 您已经进入传送门, 输入h或者help获得更多指令
             ]]>
 		</content>
 	</help>
@@ -23,7 +23,7 @@ oh no, 欢迎您再次进入传送门, 请搜索公众帐号pjq_me.
 		<title>command_list</title>
 		<content> 
            <![CDATA[
-请输入?获得更多指令
+请输入h或者help获得更多指令
 /天气 上海
 /pm25 上海
 /about
