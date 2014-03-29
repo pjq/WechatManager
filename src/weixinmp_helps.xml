@@ -6,6 +6,10 @@
 		<content> 
            <![CDATA[
 欢迎关注, 您已经进入传送门, 输入h或者help获得更多指令
+
+本公众帐号由JianqingPeng(http://pjq.me)开发维护.
+
+访问http://pjq.me/team来获取我们团队信息.
             ]]>
 		</content>
 	</help>
@@ -28,6 +32,7 @@ oh no, 欢迎您再次进入传送门, 请搜索公众帐号pjq_me.
 /pm25 上海
 /about
 /chai 需要转换的文字
+/team
             ]]>
 		</content>
 	</help>
@@ -36,7 +41,11 @@ oh no, 欢迎您再次进入传送门, 请搜索公众帐号pjq_me.
 		<title>feature_ongoing</title>
 		<content> 
            <![CDATA[
-           更多功能正在开发中...
+更多功能正在开发中...
+
+本公众帐号由JianqingPeng(http://pjq.me)开发维护.
+
+访问http://pjq.me/team来获取我们团队信息.
             ]]>
 		</content>
 	</help>
@@ -45,7 +54,9 @@ oh no, 欢迎您再次进入传送门, 请搜索公众帐号pjq_me.
 		<title>about</title>
 		<content> 
            <![CDATA[
-           本公众帐号由JianqingPeng(http://pjq.me)开发维护.
+本公众帐号由JianqingPeng(http://pjq.me)开发维护.
+
+访问http://pjq.me/team来获取我们团队信息.
             ]]>
 		</content>
 	</help>
