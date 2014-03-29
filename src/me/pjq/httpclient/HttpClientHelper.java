@@ -1,13 +1,24 @@
 package me.pjq.httpclient;
 
+import me.pjq.util.Log;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -115,7 +126,7 @@ public class HttpClientHelper {
 	public void registerHttpsScheme(HttpClient httpClient) {
 		SSLSocketFactory factory;
 		try {
-//			factory = new SSLSocketFactory(null);
+			// factory = new SSLSocketFactory(null);
 			factory = SSLSocketFactory.getSocketFactory();
 			KeyStore trustStore = KeyStore.getInstance(KeyStore
 					.getDefaultType());
@@ -156,7 +167,7 @@ public class HttpClientHelper {
 
 		try {
 			while ((line = rd.readLine()) != null) {
-				sb.append(line+'\n');
+				sb.append(line + '\n');
 			}
 
 			isr.close();
@@ -166,5 +177,75 @@ public class HttpClientHelper {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Read data from InputStreamReader
+	 * 
+	 * @param isr
+	 *            InputStreamReader
+	 * @return The Data read from The InputStreamReader
+	 */
+	public static String readFromInputStream2(InputStreamReader isr) {
+		String result = "";
+
+		BufferedReader rd = new BufferedReader(isr);
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+
+		try {
+			while ((line = rd.readLine()) != null) {
+				sb.append(line + '\n');
+			}
+
+			isr.close();
+			rd.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public static byte[] download(URL url) throws IOException {
+		URLConnection uc = url.openConnection();
+		int len = uc.getContentLength();
+		InputStream is = new BufferedInputStream(uc.getInputStream());
+		try {
+			byte[] data = new byte[len];
+			int offset = 0;
+			while (offset < len) {
+				int read = is.read(data, offset, data.length - offset);
+				if (read < 0) {
+					break;
+				}
+				offset += read;
+			}
+			if (offset < len) {
+				throw new IOException(String.format(
+						"Read %d bytes; expected %d", offset, len));
+			}
+			return data;
+		} finally {
+			is.close();
+		}
+	}
+
+	public static void downloadFile(String file, String url) {
+		Log.i("", "downloadFile url = " + url + " , file = " + file);
+		URL website;
+		try {
+			website = new URL(url);
+			ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			fos.close();
+			fos = null;
+			Log.i("", "downloadFile Success url = " + url + " , file = " + file);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

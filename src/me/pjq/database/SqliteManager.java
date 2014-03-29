@@ -22,7 +22,7 @@ import java.sql.Statement;
  * @author pjq0274
  */
 public class SqliteManager implements DataBaseInterface {
-    public static final String DATABASE_NAME = "servlet.db";
+    public static final String DATABASE_NAME = "wechat_manager.db";
 
     public static final String TABLE_ACCOUNT_NAME = "account";
 

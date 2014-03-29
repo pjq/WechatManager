@@ -109,7 +109,7 @@ public class DictionService {
 						}
 						String key = values[0];
 						String value = line.substring(1);
-						Log.i(TAG, "put key = " + key + ", value = " + value);
+						//Log.i(TAG, "put key = " + key + ", value = " + value);
 						hashMap.put(key, value);
 					}
 
@@ -122,7 +122,8 @@ public class DictionService {
 				}
 
 				long end = System.currentTimeMillis();
-				Log.i(TAG, "init use time " + (end - start));
+				Log.i(TAG, "parse the word.list, use time " + (end - start));
+				Log.i(TAG, "total words count " + hashMap.size());
 
 				dictions = hashMap;
 			}

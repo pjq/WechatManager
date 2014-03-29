@@ -10,110 +10,112 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 
-
 public class WordListUpdater {
-    private static final String TAG = WordListUpdater.class.getSimpleName();
-    public static final String WORDLIST_CACHE_PATH = "./cache/word.list";
-    public static final String WORDLIST_PATH = "./word.list";
-    public static final String WORDLIST_URL = "https://raw2.github.com/pjq/chai/master/app/src/main/assets/word.list";
-    private InputStream mServerInputStream;
+	private static final String TAG = WordListUpdater.class.getSimpleName();
+	public static final String WORDLIST_CACHE_PATH = "./cache/word.list";
+	public static final String WORDLIST_PATH = "./word.list";
+	public static final String WORDLIST_URL = "https://raw2.github.com/pjq/chai/master/app/src/main/assets/word.list";
+	private InputStream mServerInputStream;
 
-    public WordListUpdater() {
-        Log.i(TAG, "WordListUpdater()");
-    }
+	public WordListUpdater() {
+		Log.i(TAG, "WordListUpdater()");
+	}
 
-    public void updateFromServer() {
-    	if(true){
-    		return ;
-    	}
-    	
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        // Need support https
-                        HttpClient httpClient = HttpClientHelper.getInstance()
-                                .createNewDefaultHttpClient();
-                        HttpGet httpGet = new HttpGet(WORDLIST_URL);
-                        HttpResponse httpResponse = httpClient.execute(httpGet);
-                        mServerInputStream = httpResponse.getEntity()
-                                .getContent();
+	public void updateFromServer() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					if (true) {
+						String path = getWordlistCachePath();
+						HttpClientHelper.downloadFile(path, WORDLIST_URL);
+						DictionService.getInstance().parser();
+						return;
+					}
 
-                        if (null != mServerInputStream) {
-                            String result = HttpClientHelper.readFromInputStream(new InputStreamReader(mServerInputStream, "UTF-8"));
-                            String path = getWordlistCachePath();
+					// Need support https
+					HttpClient httpClient = HttpClientHelper.getInstance()
+							.createNewDefaultHttpClient();
+					HttpGet httpGet = new HttpGet(WORDLIST_URL);
+					HttpResponse httpResponse = httpClient.execute(httpGet);
+					mServerInputStream = httpResponse.getEntity().getContent();
 
-                            if (isWordListCached()) {
-                                new File(path).delete();
-                            }
+					if (null != mServerInputStream) {
+						String result = HttpClientHelper
+								.readFromInputStream(new InputStreamReader(
+										mServerInputStream, "UTF-8"));
+						String path = getWordlistCachePath();
 
-                            File file = new File(path);
+						if (isWordListCached()) {
+							new File(path).delete();
+						}
 
-                            if (!file.getParentFile().exists()) {
-                                file.getParentFile().mkdirs();
-                            }
+						File file = new File(path);
 
-                            file.createNewFile();
+						if (!file.getParentFile().exists()) {
+							file.getParentFile().mkdirs();
+						}
 
-                            Log.i(TAG, "WordListUpdater(), save file " + path);
-                            writeFile(path, result);
+						file.createNewFile();
 
-                            mServerInputStream.close();
-                            mServerInputStream = null;
-                        }
+						Log.i(TAG, "WordListUpdater(), save file " + path);
+						writeFile(path, result);
 
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-    }
+						mServerInputStream.close();
+						mServerInputStream = null;
+					}
 
-    public static String getWordlistCachePath() {
-        String path = WORDLIST_CACHE_PATH;
-        return path;
-    }
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
 
-    public static boolean isWordListCached() {
-        String path = getWordlistCachePath();
+	public static String getWordlistCachePath() {
+		String path = WORDLIST_CACHE_PATH;
+		return path;
+	}
 
-        return new File(path).exists();
-    }
+	public static boolean isWordListCached() {
+		String path = getWordlistCachePath();
 
+		return new File(path).exists();
+	}
 
-    /**
-     * save data to local file
-     *
-     * @param data
-     */
-    private void writeFile(String fileName, String data) {
-        BufferedWriter buf = null;
-        try {
-            buf = new BufferedWriter(new FileWriter(fileName, true));
-            buf.write(data, 0, data.length());
-            buf.newLine();
+	/**
+	 * save data to local file
+	 * 
+	 * @param data
+	 */
+	private void writeFile(String fileName, String data) {
+		BufferedWriter buf = null;
+		try {
+			buf = new BufferedWriter(new FileWriter(fileName, true));
+			buf.write(data, 0, data.length());
+			buf.newLine();
 
-            if (buf != null) {
-                buf.close();
-                buf = null;
-            }
-        } catch (OutOfMemoryError oom) {
-            oom.printStackTrace();
+			if (buf != null) {
+				buf.close();
+				buf = null;
+			}
+		} catch (OutOfMemoryError oom) {
+			oom.printStackTrace();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (buf != null) {
-                    buf.close();
-                    buf = null;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (buf != null) {
+					buf.close();
+					buf = null;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
-    }
+	}
 }

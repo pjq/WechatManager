@@ -77,7 +77,6 @@ public class QueryDatabase extends BaseHttpServlet {
             } while (resultSet.next());
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             SqliteManager.getInstance().init();
         }
@@ -85,13 +84,11 @@ public class QueryDatabase extends BaseHttpServlet {
 
     @Override
     public void destroy() {
-        // TODO Auto-generated method stub
         super.destroy();
 
         try {
             DataManager.getInstance().getConnection().close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
