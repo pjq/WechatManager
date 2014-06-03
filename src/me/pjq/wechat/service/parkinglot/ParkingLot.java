@@ -89,8 +89,11 @@ public class ParkingLot {
 			Entry<String, Lot> item = iterator.next();
 			String key = item.getKey();
 			Lot value = item.getValue();
-
 			sb.append(i + ":" + key + '\n');
+
+			if (i == 5) {
+				break;
+			}
 		}
 
 		sb.append("Total free parking lot " + address.size() + ", find "
