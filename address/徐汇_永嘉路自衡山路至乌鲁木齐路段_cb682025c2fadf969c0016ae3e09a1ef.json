@@ -1,0 +1,12 @@
+{
+    "status":"OK",
+    "result":{
+        "location":{
+            "lng":87.564988,
+            "lat":43.84038
+        },
+        "precise":0,
+        "confidence":10,
+        "level":"\u57ce\u5e02"
+    }
+}

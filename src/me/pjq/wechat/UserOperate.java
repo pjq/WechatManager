@@ -1,5 +1,6 @@
 package me.pjq.wechat;
 
+import me.pjq.wechat.service.parkinglot.ParkingLot;
 import cjc.weixinmp.AbstractUserOperate;
 import cjc.weixinmp.AbstractWeixinmpController;
 import cjc.weixinmp.WeixinException;
@@ -70,7 +71,8 @@ public class UserOperate extends AbstractUserOperate {
     @Override
     public AbstractResponse onLocationMessage(LocationRequest location) throws WeixinException {
         System.out.println("定位消息=" + location);
-        return buildTextResponse("你在这里" + location);
+        String response = ParkingLot.getInstance().buildLocationResponse(location.Location_X, location.Location_Y);
+        return buildTextResponse(response+"\n你在这里" + location);
     }
 
     @Override

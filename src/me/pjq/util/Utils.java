@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Utils {
 	/**
@@ -232,4 +233,25 @@ public class Utils {
 		stringbuffer.append(c0);
 		stringbuffer.append(c1);
 	}
+	
+    public static int random(int min, int max) {
+        Random random = new Random();
+        int s = random.nextInt(max) % (max - min + 1) + min;
+        return s;
+    }
+
+    /**
+     * create a rendom boolean true/false
+     * 
+     * @return
+     */
+    public static boolean randomBoolean() {
+        int s = random(1, 2);
+
+        if (s == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

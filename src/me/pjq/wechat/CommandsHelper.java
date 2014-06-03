@@ -47,7 +47,7 @@ public class CommandsHelper {
 			int beginIndex = Constants.COMMAND_CHAI.length();
 			String input = command.substring(beginIndex + 1);
 			help = DictionService.getInstance().convert(input);
-		} else if (command.startsWith(Constants.COMMAND_TWITTER)) {
+		} else if (command.equalsIgnoreCase(Constants.COMMAND_TWITTER)) {
 			help = "https://vps.pjq.me:8443/FTServlet/s1/GetUserTimeline";
 		} else if (command.startsWith(Constants.COMMAND_TEAM)) {
 			help = "http://pjq.me/team";
