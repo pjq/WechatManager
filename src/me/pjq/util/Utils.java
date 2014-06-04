@@ -68,6 +68,26 @@ public class Utils {
 
 		return result;
 	}
+	
+	/**
+	 * Read data from file
+	 * 
+	 * @param isr
+	 *            InputStreamReader
+	 * @return The Data read from The InputStreamReader
+	 */
+	public static String readFromFile(File file) {
+		String result = null;
+
+		try {
+			result = readFromInputStream(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 
 	/**
 	 * Read data from InputStreamReader

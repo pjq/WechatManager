@@ -28,7 +28,7 @@ public class ParkingLot {
 	String status;
 	Result result;
 
-	String detail;
+	String md5;
 
 	double distance;
 

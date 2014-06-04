@@ -72,7 +72,8 @@ public class UserOperate extends AbstractUserOperate {
     public AbstractResponse onLocationMessage(LocationRequest location) throws WeixinException {
         System.out.println("定位消息=" + location);
         String response = ParkingLotService.getInstance().buildLocationResponse(location.Location_X, location.Location_Y);
-        return buildTextResponse(response+"\n你在这里" + location);
+        //return buildTextResponse(response+"\n你在这里" + location);
+        return buildTextResponse(response);
     }
 
     @Override
