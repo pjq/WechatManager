@@ -1,7 +1,7 @@
 package me.pjq.wechat.service;
 
 import me.pjq.util.Log;
-import me.pjq.wechat.service.parkinglot.ParkingLot;
+import me.pjq.wechat.parkinglot.ParkingLotService;
 
 import java.io.*;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class DictionService {
 			parser();
 			new WordListUpdater().updateFromServer();
 			//init the parkinglot data list.
-			ParkingLot.getInstance().initFreeParkingLotList();
+			ParkingLotService.getInstance().initFreeParkingLotList();
 		}
 	}
 

@@ -1,6 +1,5 @@
-package me.pjq.wechat.service.parkinglot;
+package me.pjq.wechat.parkinglot;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -25,9 +24,13 @@ import com.google.gson.JsonParser;
  * @author pjq
  * 
  */
-public class Lot {
+public class ParkingLot {
 	String status;
 	Result result;
+
+	String detail;
+
+	double distance;
 
 	@Override
 	public String toString() {
@@ -36,7 +39,7 @@ public class Lot {
 		if (status.equalsIgnoreCase("OK")) {
 			try {
 				stringBuilder.append(", " + result.level + ", "
-						+ result.location.lng + result.location.lat+'\n');
+						+ result.location.lng + result.location.lat + '\n');
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -61,23 +64,33 @@ public class Lot {
 	}
 
 	class Location {
-		float lng;
-		float lat;
+		double lng;
+		double lat;
 
 		public Location(JsonObject json) {
-			lng = json.get("lng").getAsFloat();
-			lat = json.get("lat").getAsFloat();
+			lng = json.get("lng").getAsDouble();
+			lat = json.get("lat").getAsDouble();
 		}
 	}
 
-	public Lot(JsonObject json) {
+	public ParkingLot(JsonObject json) {
 		status = json.get("status").getAsString();
 		JsonObject resultJson = json.get("result").getAsJsonObject();
 		result = new Result(resultJson);
 	}
 
-	public Lot(String jsonString) {
+	public ParkingLot(String jsonString) {
 		this(new JsonParser().parse(jsonString).getAsJsonObject());
+	}
+
+	public boolean isLocationOK() {
+		if (null != result) {
+			if (null != result.location) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }
